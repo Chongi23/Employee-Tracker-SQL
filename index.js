@@ -19,8 +19,8 @@ var employee_track = function () {
     }]).then((answers) => {
 
         //View Department Table
-        if (answrs.prompt === 'View Department') {
-            db.querr(`SELECT * FROM depatment`, (err, result) => {
+        if (answers.prompt === 'View Department') {
+            db.querr(`SELECT * FROM department`, (err, result) => {
              if(err) throw err;
              console.log('Viewing Departments: ');
              console.table(result);
