@@ -1,27 +1,27 @@
 
 -- CREATE FIRST TABLE--
 CREATE TABLE department (
-   department_id INT NOT NULL AUTO_INCREMENT,
-   department_name VARCHAR(30) NOT NULL,
-   PRIMARY KEY (department_id)
+   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   name VARCHAR(30) NOT NULL,
+   
 );
 
 --CREATE SECOND TABLE--
 CREATE TABLE role (
-    role_id INT AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30),
     salary DECIMAL ,
-    PRIMARY KEY(role_id)
+    
 );
 
 --CREATE THIRD TABLE--
 CREATE TABLE employee (
-    employee_id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30)NOT NULL,
     last_name VARCHAR(30)NOT NULL,
     role_id INT,
     manager_id INT
-    PRIMARY KEY (employee_id)
+    
     
 );
 
