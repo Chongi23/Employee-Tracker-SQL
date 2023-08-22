@@ -15,14 +15,14 @@ var employee_track = function () {
         type: 'list',
         name: 'prompt',
         message: "What would you like to do?",
-        choices: ['View Departments', 'View Roles', 'View Employees', 'Add a Department', 'Add a Role', 'Add an Employee', 'Update a Role', 'Log Out']
+        choices: ['View Department', 'View Roles', 'View Employees', 'Add a Department', 'Add a Role', 'Add an Employee', 'Update a Role', 'Log Out']
     }]).then((answers) => {
-
+     console.log("answers =", answers)
         //View Department Table
         if (answers.prompt === 'View Department') {
             db.query(`SELECT * FROM department`, (err, result) => {
              if(err) throw err;
-             console.log('Viewing Departments: ');
+             console.log('Viewing Department: ');
              console.table(result);
              employee_track();
             });
@@ -33,7 +33,7 @@ var employee_track = function () {
                 if (err) throw err;
                 console.log("Viewing All Roles: ");
                 console.table(result);
-                employee_tracker();
+                employee_track();
             });
             //View Employees
         } else if (answers.prompt === 'View Employees') {
@@ -41,7 +41,7 @@ var employee_track = function () {
                 if (err) throw err;
                 console.log("Viewing Employees: ");
                 console.table(result);
-                employee_tracker();
+                employee_track();
             });
 
             //Add a department table
@@ -62,7 +62,7 @@ var employee_track = function () {
                 }
 
             }]).then((answers) => {
-                db.query(`INSERT INTO department (name) VALUES (?)`, [answers.department], (err, result) => {
+                db.query(`INSERT INTO department ( name) VALUES (?)`, [answers.department], (err, result) => {
                     if (err) throw err;
                     console.log(`Added ${answers.department} to the database.`)
                     employee_track();
@@ -119,7 +119,7 @@ var employee_track = function () {
                 db.query(`INSERT INTO role (title, salary, department) VALUES (?, ?, ?)`, [answers.role, answers.salary, answers.department], (err, result) => {
                     if (err) throw err;
                     console.log(`Added ${answers.role} to the database.`)
-                    employee_tracker();
+                    employee_track();
                 });
             })
         } else if (answers.prompt === 'Add An Employee') {
@@ -184,7 +184,7 @@ var employee_track = function () {
                 db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`, [answers.firstName, answers.lastName, answers.role, answers.manager], (err, result) => {
                     if (err) throw err;
                     console.log(`Added ${answers.role} to the database.`)
-                    employee_tracker();
+                    employee_track();
                 });
             })
         } else if (answers.prompt === 'Update An Employee Role') {
