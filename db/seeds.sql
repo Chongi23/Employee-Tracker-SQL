@@ -1,6 +1,9 @@
 --Insert "names" departments into table--
 INSERT INTO department (name) 
-VALUES ('IT', 'Finance', 'Marketing', 'HR');
+VALUES ("IT"), 
+("Finance"), 
+("Marketing"), 
+("HR");
 
 --Insert "roles" into the table--
 INSERT INTO role(title, salary, department_id ) 
