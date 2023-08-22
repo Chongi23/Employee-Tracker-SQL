@@ -11,24 +11,25 @@ CREATE TABLE department (
 
 
 CREATE TABLE role (
-    id NOT NULL INT,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30),
     salary DECIMAL,
-    PRIMARY KEY(id),
+    department_id INT,
     FOREIGN KEY (department_id),
-    REFERENCES department(id) ON DELETE CASCADE
+    REFERENCES department(id),
+    ON DELETE SET NULL
 );
 
 
 CREATE TABLE employee (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30)NOT NULL,
     last_name VARCHAR(30)NOT NULL,
     role_id INT,
     department_id INT,
-    PRIMARY KEY(id)
     FOREIGN KEY (department_id, role_id),
-    REFERENCES department(id), role(id)
+    REFERENCES department(id), role(id),
+    ON DELETE SET NULL 
     
 );
 
