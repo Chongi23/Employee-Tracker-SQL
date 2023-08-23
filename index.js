@@ -51,7 +51,7 @@ var employee_track = function () {
                 // Add a Department
                 type: 'input',
                 name: 'department',
-                message: 'What is the name of the dpeartment you would like to add?',
+                message: 'What is the name of the department you would like to add?',
                 validate: departmentInput => {
                     if (departmentInput) {
                         return true;
@@ -71,58 +71,72 @@ var employee_track = function () {
 
             //Add a new role
         } else if (answers.prompt === 'Add a Role') {
-            inquirer.prompt([
-                {
-                    // Adding A Role
-                    type: 'input',
-                    name: 'role',
-                    message: 'What is the name of the role you would like to add?',
-                    validate: roleInput => {
-                        if (roleInput) {
-                            return true;
-                        } else {
-                            console.log('Please Add A Role!');
-                            return false;
+            
+            db.query(`SELECT * FROM department`, (err, result) => {
+                if(err) throw err;
+                console.log(result)
+                inquirer.prompt([
+                    {
+                        // Adding A Role
+                        type: 'input',
+                        name: 'role',
+                        message: 'What is the name of the role you would like to add?',
+                        validate: roleInput => {
+                            if (roleInput) {
+                                return true;
+                            } else {
+                                console.log('Please Add A Role!');
+                                return false;
+                            }
+                        }
+                    },
+    
+                    {
+                        // Adding a Salary
+                        type: 'input',
+                        name: 'salary',
+                        message: 'What is the salary of this role?',
+                        validate: salaryInput => {
+                            if (salaryInput) {
+                                return true;
+                            } else {
+                                console.log('Please Add A Salary!');
+                                return false;
+                            }
+                        }
+                    },
+                    {
+                        // Department
+                        type: 'list',
+                        name: 'department',
+                        message: 'Which department does the role belong to?',
+                        choices: result.map((department) => {
+                            return {name:department.name, value:department.id}
+                        }),
+                        validate: departmentInput => {
+                            if (departmentInput) {
+                                return true;
+                            } else {
+                                console.log('Please Add The Department ID!');
+                                return false;
+                            }
                         }
                     }
-                },
-
-                {
-                    // Adding a Salary
-                    type: 'input',
-                    name: 'salary',
-                    message: 'What is the salary of this role?',
-                    validate: salaryInput => {
-                        if (salaryInput) {
-                            return true;
-                        } else {
-                            console.log('Please Add A Salary!');
-                            return false;
-                        }
-                    }
-                },
-                {
-                    // Department
-                    type: 'input',
-                    name: 'department',
-                    message: 'Which department does the role belong to?',
-                    validate: departmentInput => {
-                        if (departmentInput) {
-                            return true;
-                        } else {
-                            console.log('Please Add The Department!');
-                            return false;
-                        }
-                    }
-                }
-            ]).then((answers) => {
-                db.query(`INSERT INTO role (title, salary, department) VALUES (?, ?, ?)`, [answers.role, answers.salary, answers.department], (err, result) => {
-                    if (err) throw err;
-                    console.log(`Added ${answers.role} to the database.`)
-                    employee_track();
+                ]).then((answers) => {
+                    console.log(answers)
+                    db.query(`INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)`, [answers.role, answers.salary, answers.department], (err, result) => {
+                        if (err) throw err;
+                        console.log(`Added ${answers.role} to the database.`)
+                        employee_track();
+                    });
+                })
                 });
-            })
-        } else if (answers.prompt === 'Add An Employee') {
+
+
+        } 
+        
+        else if (answers.prompt === 'Add an Employee') {
+
             inquirer.prompt([
                 {
                     // Adding Employee First Name
@@ -156,12 +170,12 @@ var employee_track = function () {
                     // Adding Employee Role
                     type: 'input',
                     name: 'role',
-                    message: 'What is the employees role?',
+                    message: 'What is the employees role ID?',
                     validate: roleInput => {
                         if (roleInput) {
                             return true;
                         } else {
-                            console.log('Please Add The Department!');
+                            console.log('Please Add The ROLE ID!');
                             return false;
                         }
                     }
@@ -170,7 +184,7 @@ var employee_track = function () {
                     // Adding Employee Manager
                     type: 'input',
                     name: 'manager',
-                    message: 'Who is the employees manager?',
+                    message: 'What is the employees manager ID?',
                     validate: managerInput => {
                         if (managerInput) {
                             return true;
