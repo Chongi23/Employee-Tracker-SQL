@@ -1,5 +1,7 @@
 # 12 SQL: Employee Tracker
 
+## Description
+This is a command line application that allows the user to view and manage their employee database. The app uses node, inquirer, and MySQL. 
 
 ## User Story
 
@@ -19,3 +21,5 @@ Video Link: https://www.youtube.com/watch?v=BbbjK2bckDA
 
 ## Github
 Repo :https://github.com/Chongi23/Employee-Tracker-SQL
+
+
